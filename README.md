@@ -1,37 +1,66 @@
 # KI-Brücke
 
-Dieses Repository dient als gemeinsame **Übergabe- und Arbeitsbrücke zwischen verschiedenen KI-Werkzeugen**.
+Die **KI-Brücke** ist ein kleines, öffentliches Projekt für die Zusammenarbeit zwischen unterschiedlichen KI-Umgebungen.
 
-## Zweck
+## Ziel
 
-Hier können Projektdateien, Arbeitsstände, Anweisungen und Ergebnisse abgelegt werden, damit mehrere KI-Systeme am selben Stand weiterarbeiten können – auch dann, wenn sie nicht direkt auf denselben Chat, dieselbe Projektumgebung oder dieselben lokalen Dateien zugreifen können.
+Die Brücke soll **Linear** als gemeinsamen Arbeits- und Übergabepunkt nutzbar machen, auch wenn ChatGPT, Claude und Claude Code auf unterschiedlichen Konten laufen.
 
-Geplant ist insbesondere die Zusammenarbeit zwischen **ChatGPT** und **Claude Code** sowie weiteren KI-Werkzeugen, die später eingebunden werden können.
+Die Konten müssen nicht zusammengeführt werden.
 
-## Arbeitsprinzip
+## Technisches Prinzip
 
-- GitHub ist die gemeinsame Übergabestelle.
-- Der jeweils aktuelle Stand soll im Repository liegen.
-- Eine KI darf den vorhandenen Stand lesen und darauf aufbauen.
-- Änderungen sollen nachvollziehbar über Commits erfolgen.
-- Wichtige Hinweise zur Übergabe gehören in den README oder in klar benannte Dokumentationsdateien.
-- Keine KI soll stillschweigend wichtige Projektinformationen verwerfen oder durch Annahmen ersetzen.
-- Wenn Programmcode von Claude Code hinzukommt, wird dieser Repository-Bestand entsprechend erweitert.
+```
+ChatGPT / Claude
+      ↓ Auftrag
+Claude Code
+      ↓ Code + Tests
+GitHub: KI-Brücke
+      ↓
+Linear-Adapter
+      ↓
+Linear
+```
 
-## Aktueller Stand
+- **GitHub** enthält den gemeinsamen Code-Stand.
+- **Claude Code** kann den Code entwickeln und nach GitHub pushen.
+- **Linear** wird separat authentifiziert.
+- Google-, ChatGPT- und Claude-Logins sind keine feste technische Abhängigkeit der Brücke.
 
-Das Repository ist zunächst als **KI-Brücke und Übergabeplatz** eingerichtet.  
-Der eigentliche Programmcode wird später von **Claude Code** ergänzt.
+## Repository
 
-## Für KI-Systeme
+- Repository: `kuhnkay45-ctrl/KI-Br-cke`
+- Branch: `main`
+- Sichtbarkeit: öffentlich
 
-Wenn du als KI auf dieses Repository zugreifst:
+## Für Claude Code
 
-1. Lies zuerst diesen README.
-2. Prüfe danach den vorhandenen Repository-Inhalt und die Commit-Historie.
-3. Behandle vorhandene Dateien als aktuellen gemeinsamen Arbeitsstand.
-4. Ergänze oder ändere Inhalte nur entsprechend des jeweiligen Auftrags.
-5. Dokumentiere größere Änderungen nachvollziehbar.
-6. Bewahre Informationen, die für die Übergabe an eine andere KI wichtig sind, im Repository auf.
+Lies zuerst:
 
-Ziel ist, dass verschiedene KI-Systeme ohne Informationsverlust nacheinander oder gemeinsam an demselben Projekt arbeiten können.
+1. `CLAUDE.md`
+2. `BRIDGE_SPEC.md`
+3. den vorhandenen Code
+
+Danach den jeweils aktuellen Auftrag umsetzen.
+
+## Sicherheit
+
+Dieses Repository ist öffentlich.
+
+**Niemals committen:**
+
+- API-Keys
+- OAuth-Secrets
+- Access-/Refresh-Tokens
+- GitHub-Tokens
+- Claude-/Anthropic-Keys
+- Google-Zugangsdaten
+- private personenbezogene Daten
+
+Lokale Secrets gehören in Umgebungsvariablen bzw. lokale Konfigurationsdateien, die durch `.gitignore` ausgeschlossen sind.
+
+## Abgrenzung
+
+Dieses Repository enthält ausschließlich die **KI-Brücke**.
+
+Andere Fachprojekte gehören nicht in den Kern dieses Repositories.
