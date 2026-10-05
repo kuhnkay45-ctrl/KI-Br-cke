@@ -1,31 +1,50 @@
 # KI-Brücke
 
-Die **KI-Brücke** ist ein kleines, öffentliches Projekt für die Zusammenarbeit zwischen unterschiedlichen KI-Umgebungen.
+Die **KI-Brücke** ist ein kleines öffentliches Projekt, das verschiedene KI-Umgebungen mit **Linear** verbindet.
 
-## Ziel
-
-Die Brücke soll **Linear** als gemeinsamen Arbeits- und Übergabepunkt nutzbar machen, auch wenn ChatGPT, Claude und Claude Code auf unterschiedlichen Konten laufen.
-
-Die Konten müssen nicht zusammengeführt werden.
-
-## Technisches Prinzip
+## Prinzip
 
 ```
-ChatGPT / Claude
-      ↓ Auftrag
-Claude Code
-      ↓ Code + Tests
-GitHub: KI-Brücke
-      ↓
-Linear-Adapter
-      ↓
-Linear
+ChatGPT / Codex / Claude / andere KI
+               |
+               | BRIDGE_TOKEN
+               v
+        Cloudflare Worker
+               |
+               | LINEAR_API_KEY
+               v
+             Linear
 ```
 
-- **GitHub** enthält den gemeinsamen Code-Stand.
-- **Claude Code** kann den Code entwickeln und nach GitHub pushen.
-- **Linear** wird separat authentifiziert.
-- Google-, ChatGPT- und Claude-Logins sind keine feste technische Abhängigkeit der Brücke.
+- GitHub enthält den gemeinsamen Code-Stand.
+- Cloudflare hostet die Brücke.
+- Linear wird serverseitig angebunden.
+- Google-, ChatGPT- und Claude-Konten müssen nicht zusammengeführt werden.
+
+## Ein Schlüssel
+
+Für vertrauenswürdige KI-Umgebungen gibt es einen wiederverwendbaren Schlüssel:
+
+`BRIDGE_TOKEN`
+
+Der echte Linear-Schlüssel bleibt ausschließlich in Cloudflare verborgen.
+
+## Rechte
+
+Die Brücke ist **READ + CREATE/APPEND ONLY**.
+
+Erlaubt:
+- lesen
+- neue Dinge anlegen
+- neue Kommentare bzw. neue Einträge hinzufügen
+
+Nicht erlaubt:
+- vorhandene Dinge überschreiben
+- vorhandene Dinge ändern
+- löschen
+- archivieren
+
+Diese Einschränkung wird durch feste API-Endpunkte erzwungen, nicht durch Anweisungen an die KI.
 
 ## Repository
 
@@ -35,32 +54,15 @@ Linear
 
 ## Für Claude Code
 
-Lies zuerst:
+Zuerst lesen:
 
 1. `CLAUDE.md`
 2. `BRIDGE_SPEC.md`
-3. den vorhandenen Code
+3. `CLOUDFLARE_SETUP.md`
+4. `IMPLEMENTATION_TASK.md`
 
-Danach den jeweils aktuellen Auftrag umsetzen.
+Danach implementieren, testen, committen und nach `main` pushen.
 
 ## Sicherheit
 
-Dieses Repository ist öffentlich.
-
-**Niemals committen:**
-
-- API-Keys
-- OAuth-Secrets
-- Access-/Refresh-Tokens
-- GitHub-Tokens
-- Claude-/Anthropic-Keys
-- Google-Zugangsdaten
-- private personenbezogene Daten
-
-Lokale Secrets gehören in Umgebungsvariablen bzw. lokale Konfigurationsdateien, die durch `.gitignore` ausgeschlossen sind.
-
-## Abgrenzung
-
-Dieses Repository enthält ausschließlich die **KI-Brücke**.
-
-Andere Fachprojekte gehören nicht in den Kern dieses Repositories.
+Niemals Secrets oder private Zugangsdaten committen.
