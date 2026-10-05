@@ -1,4 +1,5 @@
 # Secrets / environment
+.dev.vars
 .env
 .env.*
 !.env.example
